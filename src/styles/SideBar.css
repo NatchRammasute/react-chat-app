@@ -1,25 +1,33 @@
-span {
+.Sidebar span {
 	background-color: beige;
 	padding: 1rem 1rem 1rem;
 }
 
-ul {
+.Sidebar ul {
 	list-style-type: none;
 	padding-left: 0px;
 }
 
-li {
+.Sidebar li {
 	padding: 1rem 1rem 1rem;
 	padding-left: 0px;
 	text-decoration: none;
 	border-style: inset;
 }
 
-li:hover {
+.Sidebar li:hover {
 	background-color: lightsalmon;
 }
 
 .Sidebar {
 	background-color: lightsteelblue;
 	grid-area: sidebar;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.buttonRead:hover {
+	background-color: rgb(103, 103, 150);
 }
