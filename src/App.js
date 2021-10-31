@@ -1,8 +1,9 @@
-import './App.css';
+
 import Header from './components/Header';
 import Chat from './components/Chat'
 import SideBar from './components/SideBar'
-
+import { Container, Row, Col } from 'react-bootstrap';
+import './App.css';
 //import context 
 import {MessageProvider} from './context/MessageContext'
 
@@ -31,19 +32,25 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <div className="App container">
+    <Container>
       <Header/>
       <MessageProvider>
-        <div className= "grid-container">
-          <SideBar/>
+        <div className="container">
+        <Row>
+          <Col><SideBar/></Col>
+          <Col>
           <ApolloProvider client={client}>
             <Chat />
           </ApolloProvider>
+          </Col>
+          
+        </Row>
         </div>
+
       </MessageProvider>
       
       
-      </div>
+      </Container>
 
   
   );
