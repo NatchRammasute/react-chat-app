@@ -2,6 +2,7 @@
 /* eslint-disable eqeqeq */
 import react , {useContext} from "react";
 import { MessageContext } from "../context/MessageContext"
+import '../styles/SideBar.css';
 
 
 const SideBar = () => {
@@ -43,7 +44,7 @@ const SideBar = () => {
 
 
     return(
-        <div className="col-sm element">
+        <div className="Sidebar">
             <div className="user-container">
                 <div className="user-select-name">
                     <label>1. Choose your user</label>

@@ -78,7 +78,7 @@ const Chat = () => {
 
 
     return(
-        <div className="col-sm element">
+        <div>
             <div>
                 <h1>Channel : {message.channelId}</h1>
             </div>
