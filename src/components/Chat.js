@@ -1,7 +1,7 @@
-import react , {useContext, useState} from "react";
+import react , {useContext, useState, useEffect} from "react";
 import { MessageContext } from "../context/MessageContext"
 import ShowMessage from "./ShowMessage"
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery,gql } from "@apollo/client";
 
 
 //GraphQL
@@ -12,6 +12,40 @@ import {CREATE_POST_MUTATION} from "../graphql/Mutation"
 const Chat = () => {
 
     const [message, setMessage] = useContext(MessageContext);
+    const [messages, setMessages] = useState([])
+    const {name, channelId} = message
+    console.log(channelId)
+
+
+    // Queries Call Load Text
+    const LOAD_TEXT = gql`
+        query{
+            fetchLatestMessages(channelId:"${message.channelId}"){
+            text
+            datetime
+            userId
+            }
+        }
+        `
+
+    
+
+    const { loading, err, data }= useQuery(LOAD_TEXT, {fetchPolicy: "no-cache"})
+
+    useEffect(() => {
+        // do some checking here to ensure data exist
+        if (data) {
+            //console.log(data.MessagesFetchLatest)
+          // mutate data if you need to
+          setMessages(data)
+        }
+          
+      
+      }, [data])
+      
+
+    
+
 
     //Mutation Call 
     const [pushMessage, {error}] = useMutation(CREATE_POST_MUTATION,{fetchPolicy: "no-cache"})
@@ -56,7 +90,7 @@ const Chat = () => {
                         </button>
                     </li>
                     {/* SPPOUSE TO SHOW ALL THE MESSAGE HERE  */}
-                    <ShowMessage/>
+                    <ShowMessage data= {messages}/>
 
                     <li className="chat-left">
                         <button  type="button"  className="btn btn-secondary buttonRead">

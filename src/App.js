@@ -40,7 +40,6 @@ function App() {
             <Chat />
           </ApolloProvider>
         </div>
-     
       </MessageProvider>
       
       
