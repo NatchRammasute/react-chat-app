@@ -1,0 +1,25 @@
+span {
+	background-color: beige;
+	padding: 1rem 1rem 1rem;
+}
+
+ul {
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+li {
+	padding: 1rem 1rem 1rem;
+	padding-left: 0px;
+	text-decoration: none;
+	border-style: inset;
+}
+
+li:hover {
+	background-color: lightsalmon;
+}
+
+.Sidebar {
+	background-color: lightsteelblue;
+	grid-area: sidebar;
+}

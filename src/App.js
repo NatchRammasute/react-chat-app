@@ -8,10 +8,14 @@ import {MessageProvider} from './context/MessageContext'
 
 function App() {
   return (
-    <div className="App grid-container">
+    <div className="App container">
       <Header/>
       <MessageProvider>
-        <SideBar/>
+        <div className= "grid-container">
+          <SideBar/>
+          <Chat />
+        </div>
+     
       </MessageProvider>
       
       
