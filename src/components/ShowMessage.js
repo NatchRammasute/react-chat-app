@@ -1,8 +1,11 @@
-import react , {useEffect, useState} from "react";
+import react , {useEffect, useState, useContext} from "react";
 import { MessageContext } from "../context/MessageContext"
 import { useQuery, gql } from "@apollo/client";
 
 const ShowMessage = (data,retry=(index)=>{}) => {
+
+    const [message, setMessage] = useContext(MessageContext);
+
 
     let dataQuery = data.data.fetchLatestMessages
     console.log(dataQuery)
@@ -14,9 +17,9 @@ const ShowMessage = (data,retry=(index)=>{}) => {
 
         return reversed.map(
             (item,index)=>{
-                 return (<li  key={`bubble-${item?.error ? "error": ""}-${index}`}>
+                 return (<li  className={message.userId == item.userId ?"chat-right" : "chat-left"} key={`bubble-${item?.error ? "error": ""}-${index}`}>
                         <div className="chat-avatar">
-                            {/* <img src={`images/${item.userId}.png`} alt="User"/> */}
+                            <img src={`images/${item.userId}.png`} alt="User"/>
                             <div className="chat-name">{item.userId}</div>
                         </div>
                         <div className="chat-text">{item.text}

@@ -1,0 +1,33 @@
+.chatbox-show-result {
+	width: auto;
+	height: 45rem;
+	overflow: auto;
+	white-space: nowrap;
+}
+
+.chat-left {
+	margin-right: 10%;
+}
+.chat-right {
+	margin-left: 50%;
+}
+
+img {
+	width: 2em;
+}
+
+.chat-message textarea {
+	width: auto;
+	height: 3rem;
+}
+
+.sender {
+	margin-bottom: 25px;
+}
+
+.channel {
+	margin-top: 0rem;
+	margin-bottom: 2rem;
+	padding-bottom: 2rem;
+	border-style: groove;
+}

@@ -1,9 +1,12 @@
 .App {
 	margin: 3rem 20% 23rem;
 	border-style: groove;
+	width: auto;
+	height: 50em;
 }
 
 .grid-container {
 	display: grid;
 	grid-template-areas: "sidebar chat";
+	background-color: #f4f5fa;
 }

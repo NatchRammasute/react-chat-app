@@ -2,6 +2,7 @@ import react , {useContext, useState, useEffect} from "react";
 import { MessageContext } from "../context/MessageContext"
 import ShowMessage from "./ShowMessage"
 import { useMutation, useQuery,gql } from "@apollo/client";
+import '../styles/Chat.css';
 
 
 //GraphQL
@@ -20,13 +21,29 @@ const Chat = () => {
     // Queries Call Load Text
     const LOAD_TEXT = gql`
         query{
-            fetchLatestMessages(channelId:"${message.channelId}"){
+            fetchLatestMessages(channelId:"${channelId}"){
             text
             datetime
             userId
             }
         }
         `
+
+        const fetchMoreMessagebyChannel = gql`
+        query MessagesFetchMore($messageId: String!, $old : Boolean!) {
+            MessagesFetchMore(
+                channelId:"${channelId}",
+                messageId : $messageId,
+                old:$old
+            ){
+            messageId,
+            text,
+            datetime,
+                userId
+            }
+        }
+`;
+    
 
     
 
@@ -77,15 +94,43 @@ const Chat = () => {
     }
 
 
+    const { fetchMore } = useQuery(fetchMoreMessagebyChannel, {
+        variables: {
+            messageId: false ? messages[messages.length-1]?.messageId : messages[0]?.messageId,
+            old : false
+        }
+      });
+
+    const loadMore = async (isOld=true)=>{
+        //PushMessage({ variables: { type: input.value } })
+        try {
+             fetchMore({
+                variables: {
+                    messageId:  isOld ? messages[messages.length-1]?.messageId : messages[0]?.messageId,
+                    old : isOld
+                }
+              }).then( ({data} )=>{
+                
+                if(isOld)setMessages([...messages,...data.MessagesFetchMore])
+                else setMessages([...data.MessagesFetchMore,...messages])
+            }
+                )
+        }catch{
+            return <p>Error :(</p>;
+        }
+      
+    }
+
+
     return(
         <div>
             <div>
-                <h1>Channel : {message.channelId}</h1>
+                <h1 className="channel">Channel : {message.channelId}</h1>
             </div>
             <div className="chatBox">
                 <ul className="chatbox-show-result">
                     <li className="chat-left">
-                        <button  type="button"  className="btn btn-secondary buttonRead">
+                        <button  type="button" onClick={()=>loadMore()} className="btn btn-secondary buttonRead">
                             Read More <i className="fa fa-arrow-up"></i>
                         </button>
                     </li>
@@ -93,14 +138,14 @@ const Chat = () => {
                     <ShowMessage data= {messages}/>
 
                     <li className="chat-left">
-                        <button  type="button"  className="btn btn-secondary buttonRead">
+                        <button  type="button" onClick={()=>loadMore(false)}  className="btn btn-secondary buttonRead">
                             Read More <i className="fa fa-arrow-up"></i>
                         </button>
                     </li>
                 </ul>
                 <div className="chat-message">
                     <textarea name="text" value={message.text} onChange={setUserText} cols="30" rows="10" placeholder="Type text here"></textarea>
-                    <button onClick={AddMessage} type="button" className="btn btn-primary">
+                    <button onClick={AddMessage} type="button" className="btn btn-primary sender">
                         Send Message <i className="fa fa-send"></i>
                     </button>
 
